@@ -192,12 +192,6 @@ export default {
 
               // return moment(new Date()).format('LLLL')
           }
-
-
-
-
-
-
       }
 
   },
