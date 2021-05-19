@@ -1,0 +1,61 @@
+{
+  "auth" : {
+    "createAccount": "Create Your Account",
+    "createAccountInfo": "Sign up to create, discover and connect with the global community",
+    "signIn": "Sign In",
+    "forgotPassword": "Forgot password",
+    "forgotPasswordInfo": "It's free to signup and only takes a minute.",
+    "email": "Email",
+    "password": "Password",
+    "signInAccount": "Sign in to Your Account",
+    "signInAccountInfo": "Sign in to create, discover and connect with the global community",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password",
+    "getNewPassword": "Get New Password",
+    "rememberedPassword": "Did you remembered your password?"
+  },
+  "home": {
+
+  },
+  "header" : {
+   "search" : "Поиск",
+    "aboutUs" : "О нас",
+    "help" : "Помощь",
+    "advert" : "Реклама",
+    "blog" :"Блог",
+    "entrance" : "вход",
+    "serviceForFindingServices": "Сервис поиска услуг и товаров для аренды рядом с Вами!"
+  },
+  "footer" : {
+  },
+  "messages" : {
+    "success" : {
+      "languageDeleted": "Language has been deleted successfully!",
+      "newsCreated" : "News has been created successfully!",
+      "newsUpdated" : "News has been updated successfully!",
+      "videoCreated" : "Video has been created successfully!",
+      "videoUpdated" : "Video has been updated successfully!"
+    },
+    "error" : {
+      "incorrect_credentials" : "Incorrect login or password!",
+      "somethingWentWrong" : "Something went wrong!",
+      "validationError" : "There are uncompleted fields"
+    },
+    "warning": {
+      "signOut": "Are you sure you want to log out?",
+      "delete": "Are you sure you want to delete?"
+    }
+  },
+  "buttons" : {
+    "send" : "Отправить",
+    "close" : "закрыть",
+    "cancel":"Отмена",
+    "complete"  : "Завершить",
+    "refuseFromBanner" : "Отказаться от рекламы",
+    "pay" : "Оплатить",
+    "saveChanges":"Сохранить изменения",
+    "addCard" : "Добавить карту",
+    "yes": "yes",
+    "no": "no"
+  }
+}
