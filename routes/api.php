@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\projectStyleController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,8 +33,12 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('users/get-all', [UserController::class, 'getAll']);
     Route::post('users/{id}', [UserController::class, 'update']);
+    Route::post('user/add-margin', [UserController::class, 'addMargin']);
     Route::resource('users', UserController::class);
 
+    Route::get('/settings/active-image', [projectStyleController::class, 'getActiveImage']);
+    Route::post('/settings/set-active/{id}', [projectStyleController::class, 'changeActive']);
+    Route::resource('/settings', projectStyleController::class);
 
 
 

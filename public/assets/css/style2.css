@@ -52767,8 +52767,42 @@ input[type=color].form-control:disabled {
 }
 
 /* ########## LAYOUTS  ########## */
+@font-face {
+  font-family: "PressStart2P-Regular";
+  src: url(/fonts/PressStart2P-Regular.ttf?5f45b52192a301cb8ccd8b4a96c4268f);
+}
+@font-face {
+  font-family: "Monoton-Regular";
+  src: url(/fonts/Monoton-Regular.ttf?7dedae9293901010ebba8047b4e662e1);
+}
+.opacity-5 {
+  opacity: 0.2 !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
 body {
   overflow: hidden !important;
+}
+
+.background-project {
+  width: 100%;
+  height: 100vh;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.test {
+  font-family: "Monoton-Regular";
+}
+
+.time-picker input {
+  width: 100% !important;
+  border-radius: 8px;
+  margin: 10px 0;
+  border: 1px solid #ced4da;
 }
 
 .switch {
@@ -52985,6 +53019,12 @@ input:checked + .slider:before {
     opacity: 0;
     border-radius: 50%;
   }
+}
+.project-images img {
+  height: 84px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 41%;
 }
 /* ############### CUSTOM VENDOR STYLES ############### */
 /* ########## Datepicker ########## */

@@ -24,7 +24,13 @@ const users = {
        commit('refreshUsers', res.data.data)
       })
     },
+addMarginPrice: ({commit}, data) =>{
+        return http.post('user/add-margin', {...data }).then(res=> {
+            console.log("reeeeeeee", res)
+           commit('setUsersAfterUpdate', data)
 
+        })
+},
       deleteUser: ({ commit }, params) => {
           return http.delete('/users/'+params.id).then(res => {
               console.log("ok")
@@ -83,6 +89,18 @@ const users = {
       console.log('receive.', data)
       state.users = newArrUser
     },
+      setUsersAfterUpdate(state, data) {
+          let newArrUser = []
+          state.users.forEach(u => {
+              if (u.id=== data.id){
+                  console.log("aa", {...u, marge: data.price})
+                  newArrUser.push(data)
+              } else {
+                  newArrUser.push({...u})
+              }
+          })
+          state.users = newArrUser
+      },
       changeUsers(state, data) {
         let newArrUser = [...state.users, data]
           console.log('receive.', data)

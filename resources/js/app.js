@@ -19,6 +19,15 @@ import Toasted from 'vue-toasted'
 import Multiselect from 'vue-multiselect'
 import CKEditor from 'ckeditor4-vue'
 
+import VueTimepicker from 'vue2-timepicker'
+Vue.use(VueTimepicker)
+
+import { Datetime } from 'vue-datetime'
+// You need a specific loader for CSS files
+import 'vue-datetime/dist/vue-datetime.css'
+
+Vue.use(Datetime)
+
 
 import VueFilterDateFormat from 'vue-filter-date-format';
 

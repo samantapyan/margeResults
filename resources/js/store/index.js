@@ -9,6 +9,7 @@ import language from './modules/language'
 import news from './modules/news'
 import videos from './modules/videos'
 import dynamicPage from './modules/dynamicPage'
+import settings from "./modules/settings";
 import dynamicPageText from './modules/dynamicPageText'
 
 Vue.use(Vuex)
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     faq: faq,
     news: news,
     users: users,
+    settings,
     videos: videos,
     dynamicPage: dynamicPage,
     dynamicPageText: dynamicPageText

@@ -19,6 +19,7 @@ class margeUser extends Model
     protected $fillable = [
         'email',
         'marge',
+        'margeTime',
         'name'
     ];
 

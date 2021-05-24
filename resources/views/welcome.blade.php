@@ -61,6 +61,7 @@
     <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer>
     </script>
     <link rel="stylesheet" href="{{ mix('/assets/css/style2.css') }}">
+    <link rel="stylesheet" href="vue-datetime.css">
     <title>{{env('APP_NAME')}}</title>
 </head>
 <body>
