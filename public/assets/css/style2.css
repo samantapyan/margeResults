@@ -52794,8 +52794,14 @@ body {
      object-fit: cover;
 }
 
-.test {
+.font1 {
   font-family: "Monoton-Regular";
+  font-size: 14px;
+}
+
+.font2 {
+  font-size: 12px;
+  font-family: "PressStart2P-Regular";
 }
 
 .time-picker input {
@@ -52885,6 +52891,25 @@ input:checked + .slider:before {
   text-align: center;
   color: #fff;
   font-size: 50px;
+}
+
+.main-table-dark {
+  background: none !important;
+}
+.main-table-dark tbody tr {
+  background: none;
+}
+.main-table-light {
+  background: none !important;
+}
+.main-table-light tbody th {
+  background: none !important;
+}
+.main-table-light tbody td {
+  background: none !important;
+}
+.main-table-light tbody tr {
+  background: none !important;
 }
 
 .area {
@@ -53020,6 +53045,54 @@ input:checked + .slider:before {
     border-radius: 50%;
   }
 }
+.project-table {
+  background-attachment: fixed;
+  width: 100%;
+  position: relative;
+  height: 73vh;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  overflow-x: none;
+  overflow-y: auto;
+}
+.project-table::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+.project-table::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+.project-table::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #D62929;
+}
+.project-table .back-image {
+  background-attachment: fixed;
+  width: 100%;
+  height: 73vh;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  overflow-x: none;
+  opacity: 0.5;
+  overflow-y: auto;
+}
+.project-table::after {
+  content: "";
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: yellow;
+  position: fix;
+  z-index: -1;
+}
+
 .project-images img {
   height: 84px;
   -o-object-fit: cover;

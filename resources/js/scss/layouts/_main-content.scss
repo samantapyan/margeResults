@@ -20,10 +20,14 @@ body {
   height: 100vh;
   object-fit: cover;
 }
-.test {
+.font1 {
   font-family: 'Monoton-Regular';
+  font-size: 14px;
 }
-
+.font2 {
+  font-size: 12px;
+  font-family: 'PressStart2P-Regular';
+}
 .time-picker {
   input  {
     width:100% !important;
@@ -133,10 +137,12 @@ input:checked + .slider:before {
 .main-table {
 
   &-dark {
+    background: none !important;
     //background-color:rgba(252, 255, 228, 0.5) !important;
     //--bs-table-bg: rgba(252, 255, 228, 0.5) !important;
    tbody {
      tr {
+       background:none ;
        td {
          //background-color:  rgba(252, 255, 228, 0.5) !important;
        }
@@ -144,13 +150,19 @@ input:checked + .slider:before {
    }
   }
   &-light {
+    background: none !important;
     //background-color:rgba(252, 255, 228, 0.5) !important;
     //--bs-table-bg:rgba(1,1,1,0.5) !important;
   tbody {
+    th {
+      background:none !important;
+    }
+    td {
+      background: none !important;
+    }
     tr {
-      td {
-        //background-color: rgba(1,1,1,0.5) !important;
-      }
+      background:none !important;
+
     }
   }
   }
@@ -278,7 +290,63 @@ input:checked + .slider:before {
 
 }
 
+.project-table {
+  &::-webkit-scrollbar-track
+  {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar
+  {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar-thumb
+  {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #D62929;
+  }
+
+  .back-image {
+    background-attachment: fixed;
+    width: 100%;
+    height: 73vh;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    overflow-x: none ;
+    opacity: 0.5;
+    overflow-y: auto ;
+  }
+  background-attachment: fixed;
+  width: 100%;
+  position: relative;
+  height: 73vh;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  overflow-x: none ;
+  overflow-y: auto;
+  &::after {
+    content: "";
+    //background: url(images/back.jpg);
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: yellow;
+    position: fix;
+    z-index: -1;
+  }
+}
+
 .project-images {
+
   img {
     height: 84px;
     object-fit: cover;

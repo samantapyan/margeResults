@@ -11,7 +11,7 @@ import videos from './modules/videos'
 import dynamicPage from './modules/dynamicPage'
 import settings from "./modules/settings";
 import dynamicPageText from './modules/dynamicPageText'
-
+import tableLines from "./modules/tableLines";
 Vue.use(Vuex)
 
 const dataState = createPersistedState({
@@ -27,6 +27,7 @@ export default new Vuex.Store({
     news: news,
     users: users,
     settings,
+    tableLines,
     videos: videos,
     dynamicPage: dynamicPage,
     dynamicPageText: dynamicPageText

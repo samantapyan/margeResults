@@ -6,12 +6,25 @@ const settings = {
     users: [],
     selectedImage: null,
     activeBackgroundImage: null,
-    projectImages: []
+    projectImages: [],
+    activeFont: null
   },
   actions: {
     uploadImage: ({ commit }, {data, config}) => {
       return http.post('/settings', data, config).then(res => {
             commit('setImage', res.data)
+      })
+    },
+    getActiveFont: ({commit})=> {
+      return http.get('/font/active-font').then(res =>{
+        console.log("res.data", res.data)
+       commit('setActiveFont',res.data )
+      })
+    },
+    setActiveFont: ({commit}, data)=> {
+      return http.post('/font/active-font', data).then(res =>{
+        console.log("res.data", res.data)
+        commit('setActiveFont', data )
       })
     },
     getImage: ({commit})=> {
@@ -39,6 +52,10 @@ const settings = {
   mutations: {
     setActiveBackgroundImage(state, data){
       state.activeBackgroundImage = data
+    },
+    setActiveFont(state, data){
+      console.log("fffff", data)
+      state.activeFont = data
     },
       setImage(state, user) {
           // let newData = []
@@ -78,7 +95,8 @@ const settings = {
   },
   getters: {
     projectImages: state => state.projectImages,
-    selectedImage: state => state.selectedImage
+    selectedImage: state => state.selectedImage,
+    activeFont: state => state.activeFont
   }
 }
 

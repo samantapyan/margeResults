@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\FaqCategoryResource;
-use App\Models\FaqCategory;
-use App\Models\Language;
 use Illuminate\Http\Request;
 use App\Models\styleProject;
+use App\Models\fonts;
 use App\Http\Resources\styleResource;
 use Illuminate\Support\Facades\Validator;
 
@@ -39,6 +38,9 @@ class projectStyleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+
     public function store(Request $request)
     {
 
@@ -77,6 +79,11 @@ class projectStyleController extends Controller
     public function edit($request, $id)
     {
 
+    }
+
+    public function setActiveFont(Request $request){
+        $font= fonts::where('isActive', 1)->update(['name' =>  $request->name]);
+        return response()->json($font);
     }
 
     /**
@@ -126,6 +133,10 @@ class projectStyleController extends Controller
         return  $data;
     }
 
+    public function getActiveFont(Request $request){
+        $data = fonts::where('isActive', true )->first();
+        return  $data;
+    }
     /**
      * Remove the specified resource from storage.
      *

@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\projectStyleController;
+use App\Http\Controllers\tableDesignController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,6 +32,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('logout', [LoginController::class, 'logout']);
 
 
+    Route::get('/table/active-imageTable/', [tableDesignController::class, 'getActiveImageLine']);
+    Route::post('/tableLine/change-active/{id}', [tableDesignController::class, 'changeActive']);
+    Route::resource('/settings-table', tableDesignController::class);
+
     Route::get('users/get-all', [UserController::class, 'getAll']);
     Route::post('users/{id}', [UserController::class, 'update']);
     Route::post('user/add-margin', [UserController::class, 'addMargin']);
@@ -41,6 +46,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/settings', projectStyleController::class);
 
 
+    Route::get('/font/active-font', [projectStyleController::class, 'getActiveFont']);
+    Route::post('/font/active-font', [projectStyleController::class, 'setActiveFont']);
 
 
 //    Route::post('/forgot-password', [AdminController::class, 'forgotPassword']);

@@ -75,12 +75,20 @@ addMarginPrice: ({commit}, data) =>{
       },
     setUsers(state, data) {
         let newArrUser = [...data]
-        console.log('receive.', data)
         newArrUser.sort(function (a, b) {
-            if (a.marge > b.marge) {
+            console.log("a:______", a.marge)
+            let price1 =0
+            a.marge.forEach((el,i) => {
+                price1+= +el.price
+            })
+            let price2 =0
+            b.marge.map((el,i) => {
+                price2+= +el.price
+            })
+            if (price1 > price2) {
                 return -1;
             }
-            if (a.marge < b.marge) {
+            if (price1 < price2) {
                 return 1;
             }
             // a должно быть равным b
@@ -99,16 +107,45 @@ addMarginPrice: ({commit}, data) =>{
                   newArrUser.push({...u})
               }
           })
+
+          newArrUser.sort(function (a, b) {
+              console.log("a:______", a.marge)
+              let price1 =0
+              a.marge.forEach((el,i) => {
+                  price1+= +el.price
+              })
+              let price2 =0
+              b.marge.map((el,i) => {
+                 price2+= +el.price
+              })
+              if (price1 > price2) {
+                  return -1;
+              }
+              if (price1 < price2) {
+                  return 1;
+              }
+              // a должно быть равным b
+              return 0;
+          })
           state.users = newArrUser
       },
       changeUsers(state, data) {
         let newArrUser = [...state.users, data]
           console.log('receive.', data)
           newArrUser.sort(function (a, b) {
-              if (a.marge > b.marge) {
+              console.log("a:______", a.marge)
+              let price1 =0
+              a.marge.forEach((el,i) => {
+                  price1+= +el.price
+              })
+              let price2 =0
+              b.marge.map((el,i) => {
+                  price2+= +el.price
+              })
+              if (price1 > price2) {
                   return -1;
               }
-              if (a.marge < b.marge) {
+              if (price1 < price2) {
                   return 1;
               }
               // a должно быть равным b

@@ -20,10 +20,12 @@
 <div class=" w-75 m-auto ">
     <div class="d-flex justify-content-between mb-4 p-4">
        <div>
-           <b-button @click="test">ok</b-button>
            <button type="button" class="btn btn-primary"  @click="signOut">Logout</button>
            <b-button class="mx-3 btn-danger" @click="showModal">Add User</b-button>
            <b-button class="mx-3 btn-danger" @click="openSettings">Settings</b-button>
+           <b-button class="mx-3 btn-danger" @click="openSettingsLine">LINES</b-button>
+
+
        </div>
         <div class="d-flex align-items-center " >
             <span class="mr-4 font-weight-bold">Them Mode</span>
@@ -38,9 +40,11 @@
     </div>
 
 <h1>Total {{users && users.length}}</h1>
-    <div class="ui">
-    <table
-    :class="[darkMode ? 'table-dark main-table-dark' : 'table-light main-table-light', 'table main-table']"
+    <div class="ui  project-table position-relative"  >
+<!--        <div v-if="activeBackgroundImageLine && activeBackgroundImageLine.image" class="position-absolute top-0 left-0 back-image" :style="{backgroundImage: 'url(images/' + activeBackgroundImageLine + ')', backgroundSize:'contain'}" ></div>-->
+
+        <table
+    :class="[darkMode ? 'table-dark main-table-dark' : 'table-light main-table-light', ' top-0 left-0 table main-table']"
     >
         <thead>
         <tr>
@@ -55,14 +59,15 @@
         <tbody>
 
 
-        <tr v-for="(user, ind) in users" v-if="users && users.length" :class="[
+        <tr v-for="(user, ind) in users" v-if="users && users.length"  :class="[
         ind===0 ? 'first-user':
           ind===1 ? 'second-user':
            ind===2 ? 'third-user':
-         '', 'test']">
+         '', activeFont && activeFont.hasOwnProperty('name') ? activeFont.name : '',  'test position-relative']">
+
 
             <th scope="row" class="text-center">{{ind+1}}</th>
-            <td class="text-center">{{user.name}}</td>
+            <td class="text-center">{{user.name}}   </td>
             <td class="text-center">
                 <div class="d-flex">
                ${{getDoneTotalPrice(user.marge)}}
@@ -106,6 +111,43 @@
            </div>
         </div>
     </b-modal>
+
+    <b-modal
+            id="modal-prevent-closing"
+            ref="modalSettingsLine"
+            title="TABLE LINE"
+            @show="showModalSettingsLine"
+            @ok="chooseSettingsLine"
+    >
+
+
+        <select  @change="e => selectFont(e)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" v-model="selectedFont"   >
+            <option  v-for="font in fonts" :selected="font.isSelected" :class="font.className" :key="font.key" :value="font.value">{{font.name}}</option>
+
+<!--            <option value="1" class="font1">font 1 </option>-->
+<!--            <option value="2" class="font2">font 2 </option>-->
+        </select>
+        <div class="custom-file">
+            <input name="image"  type="file" class="custom-file-input" @change="uploadImageFile($event.target.files)" id="inp" aria-describedby="inputGroupFileAdon01">
+            <label class="custom-file-label" for="inputGroupFile01" ></label>
+            <label class="custom-file-label" for="inputGroupFile01" >Choose file</label>
+        </div>
+        <div class="images" v-if="tableLineImages.length">
+            <div v-for="(img,i) in tableLineImages">
+                <div class="d-flex project-images">
+                    <input type="radio" :id="img.id" @change="changeCurrentBackgroundLine(img)" :value="img"  :checked="img.isActive">
+                    <img :src="img.image" alt="" >
+                </div>
+            </div>
+        </div>
+
+    </b-modal>
+
+
+
+
+
+
     <b-modal
             id="modal-prevent-closing"
             ref="modalMargin"
@@ -126,7 +168,7 @@
      </div>
 
 
-        <input v-model="addMarginPrice" name="marginPrice" id="addMarginPrice" class="form-control" :class="classes" placeholder="margin price" type="number" >
+        <input v-model="addMarginPrice" name="marginPrice" id="addMarginPrice" class="form-control"  placeholder="margin price" type="number" >
 
     </b-modal>
     <b-modal
@@ -233,6 +275,23 @@ export default {
           backgroundImage: '',
           date:'',
           uploadedFile: {},
+          selectedFont: 'font2',
+          fonts: [
+              {
+                  name:'font 1',
+                  key : 1,
+                  value:'font1',
+                  isSelected: false,
+                  className: 'font1'
+              },
+              {
+                  name:'font 2',
+                  value:'font2',
+                  key : 2,
+                  isSelected: true,
+                  className: 'font2'
+              },
+          ],
           config:{wrap: true,
               enableTime: true,
               noCalendar: true,
@@ -243,14 +302,20 @@ export default {
           isNew: true,
           marge:[],
           moment:moment,
-          margeTime:'',
+          margeTime: new Date(),
           userId:'',
           submittedNames: []
       }
   },
     mounted(){
       this.getUsers()
+      this.getActiveFont().then(res => {
+          console.log("aaaaaaaaaaaaaaa1000000")
+      }).catch(err => {
+          console.log("baby you have error", err)
+      })
         this.getActiveImage()
+        this.getActiveImageLine()
         this.changeLightMode(false)
     },
   computed: {
@@ -259,7 +324,11 @@ export default {
             projectImages: state => state.settings.projectImages,
             darkMode: state => state.auth.darkMode,
             activeBackgroundImage: state =>state.settings.activeBackgroundImage,
-            selectedImage: state => state.settings.selectedImage
+            selectedImage: state => state.settings.selectedImage,
+            tableLineImages: state => state.tableLines.tableLineImages,
+            activeBackgroundImageLine: state => state.tableLines.activeBackgroundImageLine,
+            selectedImageLine: state => state.tableLines.selectedImageLine,
+            activeFont: state => state.settings.activeFont
         })
 
 
@@ -278,12 +347,22 @@ export default {
               updateStyleImage: 'settings/updateStyleImage',
               setActiveImage: 'settings/setActiveImage',
               getActiveImage: 'settings/getActiveImage',
-              addMarginPriceBase: 'users/addMarginPrice'
+              addMarginPriceBase: 'users/addMarginPrice',
+              uploadImageLine: 'tableLines/uploadImageLine',
+              getImageLine: 'tableLines/getImageLine',
+              updateStyleImageLine: 'tableLines/updateStyleImageLine',
+              setActiveImageLine: 'tableLines/setActiveImageLine',
+              getActiveImageLine: 'tableLines/getActiveImageLine',
+              getActiveFont : 'settings/getActiveFont',
+              setActiveFont: 'settings/setActiveFont'
+
+
 
           }),
       test(){
               this.updateStyleImage({...this.projectImages[0], isActive:true})
       },
+      showModalAddMargin(){},
       audioData(){
          const audio = {
             success: new Audio('audio/alert1.mp3')
@@ -294,14 +373,14 @@ export default {
             this.audioData().success.play()
         },
       margeTimeConvert() {
-          return moment(this.margeTime).format('LT');
+          return moment(this.margeTime).format('MMMM Do YYYY, h:mm:ss a');
       },
       deleteUserFromList(id){
               this.deleteUser({id})
       },
       updateUserData(){
-console.log("aaaaaaaaaaaaaaa1", {id:this.userId, name: this.name,  margeTime: this.time, marge: this.marge})
-                  this.updateUser({id:this.userId, name: this.name,  margeTime: this.time, marge: this.marge}).then(r=>{
+console.log("aaaaaaaaaaaaaaa1", {id:this.userId, name: this.name,  margeTime: this.margeTime, marge: this.marge})
+                  this.updateUser({id:this.userId, name: this.name, margeTime: moment(this.margeTime).format('MMMM Do YYYY, h:mm:ss a'), marge: this.marge}).then(r=>{
                       this.$refs.modal.hide()
                   })
              },
@@ -329,13 +408,14 @@ console.log("aaaaaaaaaaaaaaa1", {id:this.userId, name: this.name,  margeTime: th
       editUser(user, name, marge, time, id){
           this.activeUserForMargin = user
           console.log("time===",time);
-          moment(time).format()
+          moment(time).format('MMMM Do YYYY, h:mm:ss a')
           this.userId = id
               this.isNew = false
               console.log(name, marge, time)
               this.name=name
           this.marge = marge
-          this.margeTime =  moment(time).format()
+          this.margeTime = moment(time).format()
+          console.log("uio", this.margeTime )
           this.$refs.modal.show()
       },
       showModal(){
@@ -361,11 +441,11 @@ console.log("aaaaaaaaaaaaaaa1", {id:this.userId, name: this.name,  margeTime: th
           this.$refs.userDetailsModal.validate().then(success => {
               if (success) {
                   if (this.isNew) {
-                      console.log("time=", moment(this.margeTime).format('L'))
-                      console.log("it is=", {name: this.name,  margeTime: this.margeTime, marge: this.marge})
+                      console.log("time=", moment(this.margeTime).format('MMMM Do YYYY, h:mm:ss a'))
+                      console.log("it is=", {name: this.name,  margeTime: moment(this.margeTime).format('MMMM Do YYYY, h:mm:ss a'), marge: this.marge})
                       setTimeout(()=>{
-                          console.log("it is2=", {name: this.name,  margeTime: this.margeTime, marge: this.marge})
-                          this.addUser({...this.activeUserForMargin, name: this.name,  margeTime: this.margeTime, marge: []}).then(r => {
+                          console.log("it is2=", {name: this.name,  margeTime: moment(this.margeTime).format('MMMM Do YYYY, h:mm:ss a'), marge: this.marge})
+                          this.addUser({...this.activeUserForMargin, name: this.name,  margeTime: moment(this.margeTime).format('MMMM Do YYYY, h:mm:ss a'), marge: []}).then(r => {
 this.resetModal()
                               this.$nextTick(() => {
                               })
@@ -430,6 +510,34 @@ this.addMarginPriceBase({...this.activeUserForMargin, marge:margeData})
                   // }
               })
           return s
+      },
+      showModalSettingsLine(){
+          this.$refs.modalSettingsLine.show()
+      },
+      chooseSettingsLine(){
+          let formData = new FormData
+          console.log("super")
+          formData.append('image', this.backgroundImage)
+          formData.append('isActive', false)
+          const config = {
+              headers: {"content-type" : "multipart/form-data"}
+          }
+
+          this.uploadImageLine({data: formData, config})
+      },
+      changeCurrentBackgroundLine(v) {
+          console.log(v)
+          this.setActiveImageLine({...v, isActive:1})
+
+      },
+      openSettingsLine(){
+          console.log("vaga123")
+          this.$refs.modalSettingsLine.show()
+          this.getImageLine()
+      },
+      selectFont(value) {
+              console.log("value====", this.selectedFont)
+          this.setActiveFont({name: this.selectedFont})
       }
     },
 
