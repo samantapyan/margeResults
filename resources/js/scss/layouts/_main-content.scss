@@ -139,7 +139,7 @@ input:checked + .slider:before {
   &-dark {
     background: none !important;
     //background-color:rgba(252, 255, 228, 0.5) !important;
-    //--bs-table-bg: rgba(252, 255, 228, 0.5) !important;
+   --bs-table-bg: rgba(133, 136, 114, 0.5) !important;
    tbody {
      tr {
        background:none ;
@@ -152,7 +152,7 @@ input:checked + .slider:before {
   &-light {
     background: none !important;
     //background-color:rgba(252, 255, 228, 0.5) !important;
-    //--bs-table-bg:rgba(1,1,1,0.5) !important;
+ //   --bs-table-bg:rgba(1,1,1,0.5) !important;
   tbody {
     th {
       background:none !important;
