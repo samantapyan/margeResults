@@ -17,7 +17,7 @@
 
         </ul>
     </div >
-<div class=" w-75 m-auto ">
+<div class=" w-85 m-auto ">
     <div class="d-flex justify-content-between mb-4 p-4">
        <div>
            <button type="button" class="btn btn-primary"  @click="signOut">Logout</button>
@@ -37,13 +37,10 @@
                 <div class="slider round"></div>
             </label>
         </div>
-
     </div>
 
-<h1>Total {{users && users.length}}</h1>
-    <div class="ui  project-table position-relative"  >
+    <div class="ui  project-table position-relative"    >
 <!--        <div v-if="activeBackgroundImageLine && activeBackgroundImageLine.image" class="position-absolute top-0 left-0 back-image" :style="{backgroundImage: 'url(images/' + activeBackgroundImageLine + ')', backgroundSize:'contain'}" ></div>-->
-
         <table
     :class="[darkMode ? 'table-dark main-table-dark' : 'table-light main-table-light', ' top-0 left-0 table main-table']"
     >
@@ -57,16 +54,13 @@
             <th scope="col" class="text-center"></th>
         </tr>
         </thead>
-        <tbody>
-
+        <tbody :style="{color:tableColor}">
 
         <tr v-for="(user, ind) in users" v-if="users && users.length"  :class="[
         ind===0 ? 'first-user':
           ind===1 ? 'second-user':
            ind===2 ? 'third-user':
          '', activeFont && activeFont.hasOwnProperty('name') ? activeFont.name : '',  'test position-relative ']">
-
-
             <th scope="row" class="text-center">{{ind+1}}</th>
             <td class="text-center text-uppercase">{{user.name}}   </td>
             <td class="text-center">
@@ -75,9 +69,9 @@
                </div>
             </td>
             <td class="text-center cursor-pointer">
-              <span>  {{user.prices && user.prices.length>0 && user.prices.filter(m=>m.isDone === true).length || 0  }} + | </span>
-                <span>  {{user.prices && user.prices.length>0 && user.prices.filter(m=>m.isDone === false).length || 0  }} - </span>
-                <span @click="addMargin(user)" class="ml-3 add-btn"><img src="images/add.svg" alt=""></span>
+              <span class="mr-1">  {{user.prices && user.prices.length>0 && user.prices.filter(m=>m.isDone === true).length || 0  }} + /  </span>
+                <span class="ml-1">  {{user.prices && user.prices.length>0 && user.prices.filter(m=>m.isDone === false).length || 0  }}  - </span>
+                <span @click="addMargin(user)" class="ml-3 add-btn"> 	&#8853;</span>
             </td>
             <td class="text-center">{{user.margeTime}}</td>
             <td class="text-center">
@@ -85,12 +79,10 @@
                 <button type="button" @click="editUser(user, user.name, user.marge, user.margeTime, user.id)" class="btn btn-primary">Edit</button>
             </td>
         </tr>
-
         </tbody>
     </table>
     </div>
 </div>
-
     <b-modal
             id="modal-prevent-closing"
             ref="modalSettings"
@@ -103,16 +95,34 @@
             <label class="custom-file-label" for="inputGroupFile01" ></label>
             <label class="custom-file-label" for="inputGroupFile01" >Choose file</label>
         </div>
+        <div>
+            <img :src="file" alt="" v-if="file">
+        </div>
+
+
         <div class="images" v-if="projectImages.length">
-           <div v-for="(img,i) in projectImages">
-               <div class="d-flex project-images">
-                   <input type="radio" :id="img.id" @change="changeCurrentBackground(img)" :value="img"  :checked="img.isActive">
-                   <img :src="img.image" alt="" >
+           <div v-for="(img,i) in projectImages" class="images-item-upload">
+               <div class="d-flex project-images justify-content-center align-items-center">
+                  <div class="project-image-item">
+                      <input type="radio" :id="img.id" :name="img.id"  :value="img"  :checked="img.isActive">
+                      <label :for="img.id">
+                          <img :src="img.image" alt="" >
+                      </label>
+                      <div class="options-btns">
+                          <div class="group">
+                             <div class="delete-btn">
+                                  <img src="images/delete.svg" alt="" @click="deleteBackground(img.id)" >
+                              </div>
+                              <div class="delete-btn">
+                                  <img src="images/confirm.svg" alt=""  @click="changeCurrentBackground(img)">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
                </div>
            </div>
         </div>
     </b-modal>
-
     <b-modal
             id="modal-prevent-closing"
             ref="modalSettingsLine"
@@ -120,8 +130,14 @@
             @show="showModalSettingsLine"
             @ok="chooseSettingsLine"
     >
-
 <!--        <verte picker="square" model="rgb" v-model="color"></verte>-->
+      <div class="w-100">
+          <div class="text-center">Select color for table text</div>
+          <div class="d-flex justify-content-center align-items-center my-3">
+              <input type="color" colorformat="rgba" v-model="color" >
+              <b-button class="mx-3 btn-danger" @click="selectColor">Confirm Color</b-button>
+          </div>
+      </div>
         <select  @change="e => selectFont(e)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" v-model="selectedFont"   >
             <option  v-for="font in fonts" :selected="font.isSelected" :class="font.className" :key="font.key" :value="font.value">{{font.name}}</option>
 
@@ -134,21 +150,14 @@
             <label class="custom-file-label" for="inputGroupFile01" >Choose file</label>
         </div>
         <div class="images" v-if="tableLineImages.length">
-            <div v-for="(img,i) in tableLineImages">
-                <div class="d-flex project-images">
+            <div v-for="(img,i) in tableLineImages" class="images-item-upload">
+                <div class="d-flex project-images justify-content-center align-items-center">
                     <input type="radio" :id="img.id" @change="changeCurrentBackgroundLine(img)" :value="img"  :checked="img.isActive">
                     <img :src="img.image" alt="" >
                 </div>
             </div>
         </div>
-
     </b-modal>
-
-
-
-
-
-
     <b-modal
             id="modal-prevent-closing"
             ref="modalMargin"
@@ -157,17 +166,13 @@
             size="lg"
             v-b-modal.modal-xl
             @show="showModalAddMargin"
-            hide-footer="true"
+            :hide-footer="true"
     >
-
 <!--        <h1><pre>{{activeUserForMargin.prices}}</pre></h1>-->
-
-
         <div class="d-flex justify-content-center my-3">
             <input v-model="addMarginPrice" name="marginPrice" id="addMarginPrice" class=" border border-dark mx-3 w-75 form-control"  placeholder="margin price" type="number" >
             <b-button class="mx-3 btn-danger" @click="addMarginToUser">add</b-button>
         </div>
-
         <div v-if="activeUserForMargin && activeUserForMargin.prices.length>0">
          <div v-for="price in activeUserForMargin.prices" class="m-1 d-flex justify-content-center align-items-center">
              <input type="number" :value="price.margin" class="form-control d-inline w-50" >
@@ -176,8 +181,6 @@
              <span class="delete-icon cursor-pointer m-3" @click="deleteUserMarginPrice({priceId: price.id, user_id : price.user_id})"><img src="images/delete.svg" alt="" ></span>
          </div>
      </div>
-
-
     </b-modal>
     <b-modal
             id="modal-prevent-closing"
@@ -186,7 +189,6 @@
             @show="showModal"
             @ok="handleOk"
     >
-
             <ValidationObserver tag="form" ref="userDetailsModal" action="" @submit.prevent="handleSubmit()">
                 <h1>{{date}}</h1>
                 <ValidationProvider tag="div" v-slot="{ classes }" rules="required" class="form-group text-left">
@@ -203,61 +205,8 @@
                 <ValidationProvider tag="div" v-slot="{ classes }" rules="required" class="form-group text-left">
 <!--                    <label for="margeTime">Marge Time  {{moment(margeTime).format('HH:MM')}} {{ moment(margeTime).format('MMMM Do YYYY, h:mm:ss a')}}</label>-->
                     <datetime v-model="margeTime" :use12-hour="true" type="time" class="w-100 time-picker"></datetime>
-
-
-<!--                    <input v-model="margeTime"  name="margeTime" id="margeTime" class="form-control" :class="classes" placeholder="marge time" type="time" >-->
                 </ValidationProvider>
-<!---->
-<!---->
-<!---->
-<!---->
-<!---->
-<!---->
-
-
-
             </ValidationObserver>
-
-<!--        <form ref="form" @submit.stop.prevent="handleSubmit">-->
-<!--            <b-form-group-->
-<!--                    label="Name"-->
-<!--                    class="my-3"-->
-<!--                    label-for="name-input"-->
-<!--                    :state="nameState"-->
-<!--            >-->
-<!--                <b-form-input-->
-<!--                        class="my-3"-->
-<!--                        id="name-input"-->
-<!--                        v-model="name"-->
-<!--                        required-->
-<!--                ></b-form-input>-->
-<!--            </b-form-group>-->
-
-
-<!--            <b-form-group-->
-<!--                    label="Price $"-->
-<!--            >-->
-<!--                <b-form-input-->
-<!--                        class="my-3"-->
-<!--                        id="marge"-->
-<!--                        v-model="marge"-->
-<!--                        required-->
-<!--                ></b-form-input>-->
-<!--            </b-form-group>-->
-
-<!--            <b-form-group-->
-<!--                    label="Time"-->
-<!--            >-->
-<!--                <b-form-input-->
-<!--                        class="my-3"-->
-<!--                        id="margeTime"-->
-<!--                        type="time"-->
-<!--                        v-model="margeTime"-->
-<!--                ></b-form-input>-->
-<!--            </b-form-group>-->
-
-<!--        </form>-->
-
     </b-modal>
 </div>
 </template>
@@ -277,12 +226,13 @@ export default {
   data () {
       return {
           checkbox: false,
+          color:'',
           name: '',
           activeUserForMargin: null,
           addMarginPrice: '',
           backgroundImage: '',
+          file:'',
           date:'',
-          color:  '',
           uploadedFile: {},
           selectedFont: 'font2',
           fonts: [
@@ -303,9 +253,30 @@ export default {
               {
                   name:'font 3',
                   value:'font3',
-                  key : 2,
+                  key : 3,
                   isSelected: false,
                   className: 'font3'
+              },
+              {
+                  name:'font 4',
+                  value:'font4',
+                  key : 4,
+                  isSelected: false,
+                  className: 'font4'
+              },
+              {
+                  name:'font 5',
+                  value:'font5',
+                  key : 5,
+                  isSelected: false,
+                  className: 'font5'
+              },
+              {
+                  name:'font 6',
+                  value:'font6',
+                  key : 6,
+                  isSelected: false,
+                  className: 'font6'
               },
           ],
           config:{wrap: true,
@@ -325,10 +296,11 @@ export default {
   },
     mounted(){
       this.getUsers()
+      this.getTableColor({name: 'table'}).then(res => {
+          this.color = this.tableColor
+      })
       this.getActiveFont().then(res => {
-          console.log("aaaaaaaaaaaaaaa1000000")
       }).catch(err => {
-          console.log("baby you have error", err)
       })
         this.getActiveImage()
         this.getActiveImageLine()
@@ -344,7 +316,8 @@ export default {
             tableLineImages: state => state.tableLines.tableLineImages,
             activeBackgroundImageLine: state => state.tableLines.activeBackgroundImageLine,
             selectedImageLine: state => state.tableLines.selectedImageLine,
-            activeFont: state => state.settings.activeFont
+            activeFont: state => state.settings.activeFont,
+            tableColor: state => state.settings.tableColor
         })
 
 
@@ -362,6 +335,7 @@ export default {
               getImage: 'settings/getImage',
               updateStyleImage: 'settings/updateStyleImage',
               setActiveImage: 'settings/setActiveImage',
+              deleteBackgroundImage: 'settings/deleteBackgroundImage',
               getActiveImage: 'settings/getActiveImage',
               addMarginPriceBase: 'users/addMarginPrice',
               uploadImageLine: 'tableLines/uploadImageLine',
@@ -374,7 +348,9 @@ export default {
               addMarginPriceToUser: 'users/addMarginPriceToUser',
               deleteUserMarginPriceCall: 'users/deleteUserMarginPrice',
               updatePriceOfUser: 'users/updatePriceOfUser',
-              cleanMargin: 'users/cleanMargin'
+              cleanMargin: 'users/cleanMargin',
+              setTableColor: 'settings/setTableColor',
+              getTableColor: 'settings/getTableColor'
 
 
 
@@ -399,19 +375,15 @@ export default {
               this.deleteUser({id})
       },
       updateUserData(){
-console.log("aaaaaaaaaaaaaaa1", {id:this.userId, name: this.name,  margeTime: this.margeTime, marge: this.marge})
                   this.updateUser({id:this.userId, name: this.name, margeTime: moment(this.margeTime).format('MMMM Do YYYY, h:mm:ss a'), marge: this.marge}).then(r=>{
                       this.$refs.modal.hide()
                   })
              },
           toggleCheckbox() {
-              console.log("worked")
               this.changeLightMode(!this.darkMode)
           },
           signOut(){
-              console.log("worked")
               this.logout().then(r => {
-                  console.log("worked want route")
                   this.$router.push('/auth/sign-in')
               })
           },
@@ -421,27 +393,21 @@ console.log("aaaaaaaaaaaaaaa1", {id:this.userId, name: this.name,  margeTime: th
           return valid
       },
       openSettings(){
-              console.log("vaga123")
               this.$refs.modalSettings.show()
               this.getImage()
       },
       editUser(user, name, marge, time, id){
-              console.log("*************", user)
           this.activeUserForMargin = user
-          console.log("time===",time);
           moment(time).format('MMMM Do YYYY, h:mm:ss a')
           this.userId = id
               this.isNew = false
-              console.log(name, marge, time)
               this.name=name
           this.marge = marge
           this.margeTime = moment(time).format()
-          console.log("uio", this.margeTime )
           this.$refs.modal.show()
       },
       showModal(){
               this.$refs.modal.show()
-          // this.$bvModal.show()
       },
       showModalSettings(){
               this.$refs.modalSettings.show()
@@ -452,26 +418,20 @@ console.log("aaaaaaaaaaaaaaa1", {id:this.userId, name: this.name,  margeTime: th
          this.time = new Date()
       },
       handleOk(bvModalEvt) {
-          // Prevent modal from closing
           bvModalEvt.preventDefault()
-
-          // Trigger submit handler
           this.handleSubmit()
       },
       handleSubmit() {
           this.$refs.userDetailsModal.validate().then(success => {
               if (success) {
                   if (this.isNew) {
-                      console.log("time=", moment(this.margeTime).format('MMMM Do YYYY, h:mm:ss a'))
-                      console.log("it is=", {name: this.name,  margeTime: moment(this.margeTime).format('MMMM Do YYYY, h:mm:ss a'), marge: this.marge})
                       setTimeout(()=>{
-                          console.log("it is2=", {name: this.name,  margeTime: moment(this.margeTime).format('MMMM Do YYYY, h:mm:ss a'), marge: this.marge})
                           this.addUser({...this.activeUserForMargin, name: this.name,  margeTime: moment(this.margeTime).format('MMMM Do YYYY, h:mm:ss a'), marge: []}).then(r => {
-this.resetModal()
+                              this.resetModal()
                               this.$nextTick(() => {
                               })
                           })
-                      },2000)
+                      },100)
                       this.$bvModal.hide('modal-prevent-closing')
                       this.CallRing()
                   } else {
@@ -482,48 +442,43 @@ this.resetModal()
               }
           })
       },
+
+      createImage(file) {
+          var image = new Image()
+          var reader = new FileReader()
+          reader.onload = (e) => {
+              this.file = e.target.result;
+          }
+          reader.readAsDataURL(file)
+      },
       uploadImageFile(value) {
           this.backgroundImage = value[0]
-          console.log("value=", this.backgroundImage)
+          this.createImage(this.backgroundImage)
       },
       chooseSettings(){
           let formData = new FormData
-          console.log("super")
           formData.append('image', this.backgroundImage)
           formData.append('isActive', false)
           const config = {
               headers: {"content-type" : "multipart/form-data"}
           }
-
+          this.file = ''
           this.uploadImage({data: formData, config})
       },
       changeCurrentBackground(v) {
-        console.log(v)
           this.setActiveImage({...v, isActive:1})
-
+      },
+      deleteBackground(id) {
+          this.deleteBackgroundImage({id})
       },
       addMarginToUser(){
-
-if (this.addMarginPrice) {
-    let user_id = this.activeUserForMargin.id
-
-
-    this.addMarginPriceToUser({user_id, margin:this.addMarginPrice, isDone : false}).then(d => {
-        this.CallRing()
-        this.addMarginPrice = ''
-    })
-}
-
-//               console.log(this.addMarginPrice)
-//           let margeArray = []
-//               this.activeUserForMargin.marge.forEach(m => {
-//                   margeArray.push({...m, price: Number(m.price)})
-//           })
-//           this.activeUserForMargin.marge = margeArray
-//           let margeData = this.activeUserForMargin.marge.length !== 0 ? this.activeUserForMargin.marge : []
-//           margeData.push({actionId: new Date().getTime(), isDone:false, price:this.addMarginPrice})
-//
-// this.addMarginPriceBase({...this.activeUserForMargin, marge:margeData})
+        if (this.addMarginPrice) {
+            let user_id = this.activeUserForMargin.id
+            this.addMarginPriceToUser({user_id, margin:this.addMarginPrice, isDone : false}).then(d => {
+                this.CallRing()
+                this.addMarginPrice = ''
+            })
+        }
       },
 
       addMargin(user){
@@ -531,17 +486,12 @@ if (this.addMarginPrice) {
           this.$refs.modalMargin.show()
       },
       handleMargeDone(actionId) {
-          console.log("test1", actionId);
       },
       getDoneTotalPrice(prices) {
           let s = 0
           if (prices.length === 0) return 0
-          console.log("marge=",typeof prices)
-
               prices.forEach(m => {
-                  // if (m.isDone === true) {
                       s+= Number(m.margin)
-                  // }
               })
           return s
       },
@@ -550,7 +500,6 @@ if (this.addMarginPrice) {
       },
       chooseSettingsLine(){
           let formData = new FormData
-          console.log("super")
           formData.append('image', this.backgroundImage)
           formData.append('isActive', false)
           const config = {
@@ -560,21 +509,20 @@ if (this.addMarginPrice) {
           this.uploadImageLine({data: formData, config})
       },
       changeCurrentBackgroundLine(v) {
-          console.log(v)
           this.setActiveImageLine({...v, isActive:1})
 
       },
       openSettingsLine(){
-          console.log("vaga123")
           this.$refs.modalSettingsLine.show()
           this.getImageLine()
       },
       selectFont(value) {
-              console.log("value====", this.selectedFont)
           this.setActiveFont({name: this.selectedFont})
       },
+      selectColor(value) {
+          this.setTableColor({color: this.color, name:'table'})
+      },
       deleteUserMarginPrice(data) {
-
                   let _this = this
                   this.deleteUserMarginPriceCall(data).then(d => {
                       let prices = [..._this.activeUserForMargin.prices]
@@ -582,30 +530,25 @@ if (this.addMarginPrice) {
                       _this.activeUserForMargin.prices = prices.filter(p => p.id !== data.priceId)
                   })
 
-
       },
       updatePrice(data){
-          console.log("brr",data);
           this.updatePriceOfUser(data).then(r => {
               let prices = [...this.activeUserForMargin.prices]
               let newPrices = []
-         prices.forEach(p => {
+              prices.forEach(p => {
                   if ( p.id === data.id) {
                       newPrices.push({...data})
                   } else {
                       newPrices.push(p)
                   }
               })
-
               this.activeUserForMargin.prices = [...newPrices]
-
           })
       },
       cleanMarginOfUsers(){
-              this.cleanMargin()
+        this.cleanMargin()
       }
     },
-
   }
 
 

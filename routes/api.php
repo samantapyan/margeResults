@@ -45,6 +45,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('users', UserController::class);
 
     Route::get('/settings/active-image', [projectStyleController::class, 'getActiveImage']);
+    Route::post('/delete-background/{id}', [projectStyleController::class, 'deleteBackground']);
     Route::post('/settings/set-active/{id}', [projectStyleController::class, 'changeActive']);
     Route::resource('/settings', projectStyleController::class);
 
@@ -57,6 +58,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/font/active-font', [projectStyleController::class, 'getActiveFont']);
     Route::post('/font/active-font', [projectStyleController::class, 'setActiveFont']);
 
+
+    Route::post('/color', [\App\Http\Controllers\ColorController::class, 'setActiveColor']);
+    Route::post('/table-color-get', [\App\Http\Controllers\ColorController::class, 'getActiveColor']);
 
 //    Route::post('/forgot-password', [AdminController::class, 'forgotPassword']);
 

@@ -2,15 +2,8 @@ import Vue from 'vue'
 import createPersistedState from 'vuex-persistedstate'
 import Vuex from 'vuex'
 import auth from './modules/auth'
-import faq from './modules/faq'
 import users from './modules/users'
-import faqCategory from './modules/faqCategory'
-import language from './modules/language'
-import news from './modules/news'
-import videos from './modules/videos'
-import dynamicPage from './modules/dynamicPage'
 import settings from "./modules/settings";
-import dynamicPageText from './modules/dynamicPageText'
 import tableLines from "./modules/tableLines";
 Vue.use(Vuex)
 
@@ -21,16 +14,9 @@ const dataState = createPersistedState({
 export default new Vuex.Store({
   modules: {
     auth: auth,
-    language: language,
-    faqCategory: faqCategory,
-    faq: faq,
-    news: news,
     users: users,
     settings,
     tableLines,
-    videos: videos,
-    dynamicPage: dynamicPage,
-    dynamicPageText: dynamicPageText
   },
   plugins: [dataState]
 })

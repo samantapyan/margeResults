@@ -2,28 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="81b297d0-79a3-49fe-95c4-e4c954a59448" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/images/add.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/delete.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/delete.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/scss/web-fonts/Pattaya-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/confirm.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/scss/web-fonts/Caveat-VariableFont_wght.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/scss/web-fonts/SpecialElite-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/scss/web-fonts/ZCOOLKuaiLe-Regular.ttf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/projectStyleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/projectStyleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/margeUserResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/margeUserResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/fonts.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/fonts.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/margeUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/margeUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/marge_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/marge_users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/styleProject.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/styleProject.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_05_16_194700_create_marge_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_05_16_194700_create_marge_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/assets/css/style2.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style2.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/pages/Dashboard/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/pages/Dashboard/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/scss/layouts/_main-content.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/scss/layouts/_main-content.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/scss/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/scss/style.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/scss/template/_calendar.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/scss/template/_chat.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/scss/template/_contacts.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/scss/template/_cryptocurrency.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/scss/template/_ecommerce-pages.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/scss/template/_error.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/scss/template/_invoice.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/scss/template/_mail.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/scss/template/_profile.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/scss/template/_spinner.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/modules/auth/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/dynamicPage/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/dynamicPageText/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/faq/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/faqCategory/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/language/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/news/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/settings/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/modules/settings/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/tableLines/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/modules/tableLines/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/store/modules/users/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/modules/users/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/videos/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -226,7 +238,8 @@
       <workItem from="1622058124674" duration="6643000" />
       <workItem from="1622088231863" duration="6194000" />
       <workItem from="1622142628490" duration="5885000" />
-      <workItem from="1622175178161" duration="7330000" />
+      <workItem from="1622175178161" duration="7494000" />
+      <workItem from="1622217945257" duration="12796000" />
     </task>
     <servers />
   </component>
@@ -251,7 +264,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/resources/js/store/modules/users/index.js</url>
-          <line>186</line>
+          <line>116</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

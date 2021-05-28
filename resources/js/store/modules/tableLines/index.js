@@ -31,7 +31,6 @@ const tableLines = {
     },
     getActiveImageLine:({commit}) =>{
       return http.get('/table/active-imageTable/').then(res =>{
-        console.log("res U tat", res)
          commit('setactiveBackgroundImageLine', res.data)
       })
     }
@@ -41,16 +40,7 @@ const tableLines = {
       state.activeBackgroundImageLine = data
     },
       setImage(state, user) {
-          // let newData = []
-          // let usersData = [...state.users]
-          // usersData.forEach(u => {
-          //     if (u.id === user.id) {
-          //         newData.push({...user})
-          //     } else {
-          //         newData.push(u)
-          //     }
-          // })
-          // state.users = newData
+
       },
     setProjectActiveImage(state, data){
         let newData = []
@@ -66,11 +56,9 @@ const tableLines = {
           }
         }
       })
-      console.log("aaaaaaaaaaaaaaa",newData);
       state.tableLineImages = newData
     },
     setTableLineImages(state, data){
-        console.log("data===", data)
         state.tableLineImages = data
         state.selectedImageLine = data.find(img => img.isActive === true || img.isActive === 1)
 

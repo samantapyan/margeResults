@@ -11,7 +11,23 @@
   font-family: 'Pattaya-Regular';
   src: url(../web-fonts/Pattaya-Regular.ttf);
 }
+@font-face {
+  font-family: 'ZCOOLKuaiLe-Regular';
+  src: url(../web-fonts/ZCOOLKuaiLe-Regular.ttf);
+}
+@font-face {
+  font-family: 'Caveat-VariableFont_wght';
+  src: url(../web-fonts/Caveat-VariableFont_wght.ttf);
+}
+@font-face {
+  font-family: 'SpecialElite-Regular';
+  src: url(../web-fonts/SpecialElite-Regular.ttf);
+}
 
+
+.w-85 {
+  width: 89%;
+}
 .opacity-5 {
   opacity: 0.2 !important;
 }
@@ -24,6 +40,9 @@ body {
 .background-project{
   width: 100%;
   height: 100vh;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  color: white;
   object-fit: cover;
 }
 .font1 {
@@ -38,6 +57,19 @@ body {
   font-size: 25px;
   font-family: 'Pattaya-Regular';
 }
+.font4 {
+  font-size: 25px;
+  font-family: 'ZCOOLKuaiLe-Regular';
+}
+.font5 {
+  font-family: 'Caveat-VariableFont_wght';
+  font-size: 25px;
+}
+.font6 {
+  font-family: 'SpecialElite-Regular';
+  font-size: 25px;
+}
+
 
 .time-picker {
   input  {
@@ -184,9 +216,8 @@ input:checked + .slider:before {
 
 
 .area{
-  background: #4e54c8;
+
   z-index:-1;
-  background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
   width: 100%;
   height:100vh;
 
@@ -385,5 +416,62 @@ input:checked + .slider:before {
   img {
     width: 100%;
     height: 100%;
+  }
+}
+
+
+.images {
+  .images-item-upload {
+    .project-images {
+      margin: 10px auto;
+      position:relative;
+      .project-image-item {
+        &:hover  .options-btns  {
+          display: block;
+        }
+.options-btns {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -67%);
+  display: none;
+  .group {
+
+
+    display: flex;
+    .delete-btn {
+      width: 66px;
+      display: flex;
+      height: 55px;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        height: 100%;
+        margin: 10px 10px;
+      }
+    }
+  }
+}
+
+
+        input{
+          margin:10px;
+          cursor: pointer;
+          overflow: hidden;
+          position: absolute;
+          opacity:0;
+        }
+        label {
+          cursor: pointer;
+          text-align: center;
+          img {
+            border-radius:30px;
+            box-shadow: 1px 10px 10px ;
+          }
+        }
+      }
+
+    }
   }
 }

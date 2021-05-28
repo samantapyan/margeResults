@@ -41,7 +41,10 @@ class projectStyleController extends Controller
      */
 
 
+public function deleteBackground(Request $request, $id) {
+    styleProject::where('id', $id)->delete();
 
+}
     public function store(Request $request)
     {
 

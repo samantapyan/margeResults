@@ -4,6 +4,7 @@ const settings = {
   namespaced: true,
   state: {
     users: [],
+    tableColor: null,
     selectedImage: null,
     activeBackgroundImage: null,
     projectImages: [],
@@ -15,15 +16,28 @@ const settings = {
             commit('setImage', res.data)
       })
     },
+    setTableColor: ({commit}, data)=> {
+      return http.post('/color', data).then(res => {
+         commit('setAfterColorSelect', res.data.data.color)
+      })
+    },
+    deleteBackgroundImage: ({commit}, data)=> {
+      return http.post('/delete-background/'+ data.id).then(res => {
+         commit('setImagesProject', data.id)
+      })
+    },
+    getTableColor: ({commit}, data)=> {
+      return http.post('/table-color-get', data).then(res => {
+        commit('setTableColorData', res.data.data)
+      })
+    },
     getActiveFont: ({commit})=> {
       return http.get('/font/active-font').then(res =>{
-        console.log("res.data", res.data)
        commit('setActiveFont',res.data )
       })
     },
     setActiveFont: ({commit}, data)=> {
       return http.post('/font/active-font', data).then(res =>{
-        console.log("res.data", res.data)
         commit('setActiveFont', data )
       })
     },
@@ -42,6 +56,8 @@ const settings = {
         commit('setProjectActiveImage', data)
       })
     },
+
+
     getActiveImage:({commit}) =>{
       return http.get('/settings/active-image').then(res =>{
         console.log(res)
@@ -50,24 +66,27 @@ const settings = {
     }
   },
   mutations: {
+    setAfterColorSelect(state, color) {
+        state.tableColor = color
+    },
+    setImagesProject(state, id) {
+      state.projectImages =   state.projectImages.filter(img => img.id !== id)
+      console.log("selecteeeeeee", state.selectedImage, id)
+          if (state.activeBackgroundImage && state.activeBackgroundImage.id === id) {
+            state.activeBackgroundImage = null
+          }
+    },
+    setTableColorData(state, data) {
+      state.tableColor = data.color
+    },
     setActiveBackgroundImage(state, data){
       state.activeBackgroundImage = data
     },
     setActiveFont(state, data){
-      console.log("fffff", data)
       state.activeFont = data
     },
       setImage(state, user) {
-          // let newData = []
-          // let usersData = [...state.users]
-          // usersData.forEach(u => {
-          //     if (u.id === user.id) {
-          //         newData.push({...user})
-          //     } else {
-          //         newData.push(u)
-          //     }
-          // })
-          // state.users = newData
+
       },
     setProjectActiveImage(state, data){
         let newData = []
@@ -83,11 +102,9 @@ const settings = {
           }
         }
       })
-      console.log("aaaaaaaaaaaaaaa",newData);
       state.projectImages = newData
     },
     setProjectImages(state, data){
-        console.log("data===", data)
         state.projectImages = data
         state.selectedImage = data.find(img => img.isActive === true || img.isActive === 1)
 
@@ -96,7 +113,8 @@ const settings = {
   getters: {
     projectImages: state => state.projectImages,
     selectedImage: state => state.selectedImage,
-    activeFont: state => state.activeFont
+    activeFont: state => state.activeFont,
+    tableColor: state => state.tableColor
   }
 }
 

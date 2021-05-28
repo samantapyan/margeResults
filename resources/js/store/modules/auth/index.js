@@ -25,7 +25,6 @@ const auth = {
     },
     logout: ({ commit }) => {
       return http.get('/logout').then(() => {
-        console.log("aaa11111")
         commit('userLogout')
       })
     }
