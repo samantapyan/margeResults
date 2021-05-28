@@ -11,6 +11,7 @@ use App\Models\News;
 use App\Models\styleProject;
 use App\Models\User;
 use App\Models\margeUser;
+use App\Models\marginPrice;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -25,14 +26,24 @@ class UserController extends Controller
     public function index()
     {
 
-        $users = margeUser::get();
-        foreach ($users as $user) {
-            $user->marge = json_decode($user->marge);
-        }
+//        $users = margeUser::get();
+//
+//        foreach ($users as $user) {
+//            $user->marge = json_decode($user->marge);
+//
+//        }
+//
+//
+//        return response()->json([
+//            "data" =>$users
+//        ]);
 
-        return response()->json([
-            "data" =>$users
-        ]);
+
+        $news = margeUser::get();
+
+        return margeUserResource::collection($news);
+
+
     }
 
 
@@ -143,7 +154,7 @@ class UserController extends Controller
             'marge' =>   $data->marge,
             'margeTime' =>  $data->margeTime
         ]);
-
+//dd(margeUser::findOrFail($id)->getMarginPrices());
         return new margeUserResource(margeUser::findOrFail($id));
     }
 
@@ -153,6 +164,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+
+
+
     public function destroy($id)
     {
 

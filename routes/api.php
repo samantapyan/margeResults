@@ -7,6 +7,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\projectStyleController;
 use App\Http\Controllers\tableDesignController;
+use App\Http\Controllers\marginPriceController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,6 +39,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/settings-table', tableDesignController::class);
 
     Route::get('users/get-all', [UserController::class, 'getAll']);
+    Route::post('clean/', [marginPriceController::class, 'clean']);
     Route::post('users/{id}', [UserController::class, 'update']);
     Route::post('user/add-margin', [UserController::class, 'addMargin']);
     Route::resource('users', UserController::class);
@@ -44,6 +47,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/settings/active-image', [projectStyleController::class, 'getActiveImage']);
     Route::post('/settings/set-active/{id}', [projectStyleController::class, 'changeActive']);
     Route::resource('/settings', projectStyleController::class);
+
+
+    Route::post('/margin-price-update/{id}', [marginPriceController::class, 'updatePrice']);
+    Route::resource('/margin-price', marginPriceController::class);
+
 
 
     Route::get('/font/active-font', [projectStyleController::class, 'getActiveFont']);

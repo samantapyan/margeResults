@@ -19,6 +19,7 @@ class margeUserResource extends JsonResource
             'name' => $this->name,
             'test' => '500',
             'id' => $this->id,
+           "prices" => $this->getMarginPrices,
             'marge' => json_decode($this-> marge),
 
         ];

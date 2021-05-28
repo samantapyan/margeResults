@@ -41,13 +41,6 @@ Vue.use(BootstrapVue)
 const moment = require('vue-moment');
 Vue.use(moment)
 
-// import VueMoment from 'vue-moment'
-//
-// import moment from 'moment-timezone'
-//
-// Vue.use(VueMoment, {
-//     moment,
-// })
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 configure({

@@ -52775,6 +52775,10 @@ input[type=color].form-control:disabled {
   font-family: "Monoton-Regular";
   src: url(/fonts/Monoton-Regular.ttf?7dedae9293901010ebba8047b4e662e1);
 }
+@font-face {
+  font-family: "Pattaya-Regular";
+  src: url(/fonts/Pattaya-Regular.ttf?025b3946074d659e4e280abf95ec77f4);
+}
 .opacity-5 {
   opacity: 0.2 !important;
 }
@@ -52796,12 +52800,17 @@ body {
 
 .font1 {
   font-family: "Monoton-Regular";
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .font2 {
-  font-size: 12px;
+  font-size: 17px;
   font-family: "PressStart2P-Regular";
+}
+
+.font3 {
+  font-size: 25px;
+  font-family: "Pattaya-Regular";
 }
 
 .time-picker input {
@@ -53100,6 +53109,26 @@ input:checked + .slider:before {
      object-fit: cover;
   width: 41%;
 }
+.delete-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+}
+.delete-icon img {
+  width: 100%;
+  height: 100%;
+}
+
+.add-btn {
+  width: 32px;
+  display: inline-block;
+  height: 32px;
+}
+.add-btn img {
+  width: 100%;
+  height: 100%;
+}
+
 /* ############### CUSTOM VENDOR STYLES ############### */
 /* ########## Datepicker ########## */
 .ui-datepicker {

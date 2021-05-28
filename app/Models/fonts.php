@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class fonts extends Model
 {
+    protected $fillable = [
+
+        'isActive'
+    ];
     use HasFactory;
 }

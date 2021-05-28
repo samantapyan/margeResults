@@ -31,11 +31,18 @@ class margeUser extends Model
     protected $hidden = [
         'email'
     ];
+    protected $guarded = [];
+
+    public function getMarginPrices(){
+        return $this->hasMany(marginPrice::class, 'user_id', 'id');
+    }
 
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
+
+
 
 }

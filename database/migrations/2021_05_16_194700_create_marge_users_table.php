@@ -14,7 +14,7 @@ class CreateMargeUsersTable extends Migration
     public function up()
     {
         Schema::create('marge_users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name')->nullable(false);
             $table->string('marge')->nullable(0);
             $table->dateTime('margeTime')->default(DB::raw('CURRENT_TIMESTAMP'));

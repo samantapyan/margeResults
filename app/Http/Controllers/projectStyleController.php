@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\FaqCategoryResource;
+use App\Models\margeUser;
 use Illuminate\Http\Request;
 use App\Models\styleProject;
 use App\Models\fonts;
@@ -82,7 +83,16 @@ class projectStyleController extends Controller
     }
 
     public function setActiveFont(Request $request){
-        $font= fonts::where('isActive', 1)->update(['name' =>  $request->name]);
+        $active =  $font= fonts::where('isActive', 1)->first();
+        if ($active) {
+            $font= fonts::where('isActive', 1)->update(['name' =>  $request->name]);
+        } else {
+            fonts::create([
+                'isActive' => true,
+                'name' =>   $request->name,
+
+            ]);
+        }
         return response()->json($font);
     }
 

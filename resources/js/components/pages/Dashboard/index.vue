@@ -24,6 +24,7 @@
            <b-button class="mx-3 btn-danger" @click="showModal">Add User</b-button>
            <b-button class="mx-3 btn-danger" @click="openSettings">Settings</b-button>
            <b-button class="mx-3 btn-danger" @click="openSettingsLine">LINES</b-button>
+           <b-button class="mx-3 btn-danger" @click="cleanMarginOfUsers">Clean</b-button>
 
 
        </div>
@@ -63,20 +64,20 @@
         ind===0 ? 'first-user':
           ind===1 ? 'second-user':
            ind===2 ? 'third-user':
-         '', activeFont && activeFont.hasOwnProperty('name') ? activeFont.name : '',  'test position-relative']">
+         '', activeFont && activeFont.hasOwnProperty('name') ? activeFont.name : '',  'test position-relative ']">
 
 
             <th scope="row" class="text-center">{{ind+1}}</th>
-            <td class="text-center">{{user.name}}   </td>
+            <td class="text-center text-uppercase">{{user.name}}   </td>
             <td class="text-center">
                 <div class="d-flex">
-               ${{getDoneTotalPrice(user.marge)}}
+               ${{getDoneTotalPrice(user.prices)}}
                </div>
             </td>
-            <td class="text-center">
-              <span>  {{user.marge && user.marge.length>0 && user.marge.filter(m=>m.isDone === true).length || 0  }} + </span>
-                <span>  {{user.marge && user.marge.length>0 && user.marge.filter(m=>m.isDone === false).length || 0  }} - </span>
-                <span @click="addMargin(user)" class="ml-3">add +</span>
+            <td class="text-center cursor-pointer">
+              <span>  {{user.prices && user.prices.length>0 && user.prices.filter(m=>m.isDone === true).length || 0  }} + | </span>
+                <span>  {{user.prices && user.prices.length>0 && user.prices.filter(m=>m.isDone === false).length || 0  }} - </span>
+                <span @click="addMargin(user)" class="ml-3 add-btn"><img src="images/add.svg" alt=""></span>
             </td>
             <td class="text-center">{{user.margeTime}}</td>
             <td class="text-center">
@@ -120,7 +121,7 @@
             @ok="chooseSettingsLine"
     >
 
-
+<!--        <verte picker="square" model="rgb" v-model="color"></verte>-->
         <select  @change="e => selectFont(e)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" v-model="selectedFont"   >
             <option  v-for="font in fonts" :selected="font.isSelected" :class="font.className" :key="font.key" :value="font.value">{{font.name}}</option>
 
@@ -152,23 +153,30 @@
             id="modal-prevent-closing"
             ref="modalMargin"
             title="Margin Add"
+
+            size="lg"
+            v-b-modal.modal-xl
             @show="showModalAddMargin"
-            @ok="addMarginToUser"
+            hide-footer="true"
     >
 
-     <div v-if="activeUserForMargin && activeUserForMargin.marge.length>0">
-         <div v-for="price in activeUserForMargin.marge" class="m-1">
-             <input type="number" :value="price.price" >
-             <button type="button" @click="handleMargeDone(price.actionId)" :class="[price.isDone === true ? 'opacity-5' : '', 'btn btn-lg btn-primary m-3' ]" :disabled="price.isDone === true ? true: false">+</button>
-             <button type="button" :class="[price.isDone === false ? 'opacity-5' : '', 'btn btn-lg btn-warning m-3' ]"  :disabled="price.isDone === false ? true: false">-</button>
+<!--        <h1><pre>{{activeUserForMargin.prices}}</pre></h1>-->
 
 
+        <div class="d-flex justify-content-center my-3">
+            <input v-model="addMarginPrice" name="marginPrice" id="addMarginPrice" class=" border border-dark mx-3 w-75 form-control"  placeholder="margin price" type="number" >
+            <b-button class="mx-3 btn-danger" @click="addMarginToUser">add</b-button>
+        </div>
 
+        <div v-if="activeUserForMargin && activeUserForMargin.prices.length>0">
+         <div v-for="price in activeUserForMargin.prices" class="m-1 d-flex justify-content-center align-items-center">
+             <input type="number" :value="price.margin" class="form-control d-inline w-50" >
+             <button type="button" @click="updatePrice({...price, isDone: true})" :class="[price.isDone === true ? 'opacity-5' : '', 'btn btn-lg btn-primary m-3' ]" :disabled="price.isDone === true ? true: false">+</button>
+             <button type="button"  @click="updatePrice({...price, isDone: false})"   :class="[price.isDone === false ? 'opacity-5' : '', 'btn btn-lg btn-warning m-3' ]"  :disabled="price.isDone === false ? true: false">-</button>
+             <span class="delete-icon cursor-pointer m-3" @click="deleteUserMarginPrice({priceId: price.id, user_id : price.user_id})"><img src="images/delete.svg" alt="" ></span>
          </div>
      </div>
 
-
-        <input v-model="addMarginPrice" name="marginPrice" id="addMarginPrice" class="form-control"  placeholder="margin price" type="number" >
 
     </b-modal>
     <b-modal
@@ -257,23 +265,24 @@
 <script>
    import moment from 'moment'
    import { Datetime } from 'vue-datetime';
-
-
+   import Verte from 'verte';
    import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Dashboard',
     components : {
-        datetime: Datetime
+        datetime: Datetime,Verte
+
     },
   data () {
       return {
           checkbox: false,
           name: '',
           activeUserForMargin: null,
-          addMarginPrice: 0,
+          addMarginPrice: '',
           backgroundImage: '',
           date:'',
+          color:  '',
           uploadedFile: {},
           selectedFont: 'font2',
           fonts: [
@@ -290,6 +299,13 @@ export default {
                   key : 2,
                   isSelected: true,
                   className: 'font2'
+              },
+              {
+                  name:'font 3',
+                  value:'font3',
+                  key : 2,
+                  isSelected: false,
+                  className: 'font3'
               },
           ],
           config:{wrap: true,
@@ -354,7 +370,11 @@ export default {
               setActiveImageLine: 'tableLines/setActiveImageLine',
               getActiveImageLine: 'tableLines/getActiveImageLine',
               getActiveFont : 'settings/getActiveFont',
-              setActiveFont: 'settings/setActiveFont'
+              setActiveFont: 'settings/setActiveFont',
+              addMarginPriceToUser: 'users/addMarginPriceToUser',
+              deleteUserMarginPriceCall: 'users/deleteUserMarginPrice',
+              updatePriceOfUser: 'users/updatePriceOfUser',
+              cleanMargin: 'users/cleanMargin'
 
 
 
@@ -406,6 +426,7 @@ console.log("aaaaaaaaaaaaaaa1", {id:this.userId, name: this.name,  margeTime: th
               this.getImage()
       },
       editUser(user, name, marge, time, id){
+              console.log("*************", user)
           this.activeUserForMargin = user
           console.log("time===",time);
           moment(time).format('MMMM Do YYYY, h:mm:ss a')
@@ -482,16 +503,27 @@ this.resetModal()
 
       },
       addMarginToUser(){
-              console.log(this.addMarginPrice)
-          let margeArray = []
-              this.activeUserForMargin.marge.forEach(m => {
-                  margeArray.push({...m, price: Number(m.price)})
-          })
-          this.activeUserForMargin.marge = margeArray
-          let margeData = this.activeUserForMargin.marge.length !== 0 ? this.activeUserForMargin.marge : []
-          margeData.push({actionId: new Date().getTime(), isDone:false, price:this.addMarginPrice})
 
-this.addMarginPriceBase({...this.activeUserForMargin, marge:margeData})
+if (this.addMarginPrice) {
+    let user_id = this.activeUserForMargin.id
+
+
+    this.addMarginPriceToUser({user_id, margin:this.addMarginPrice, isDone : false}).then(d => {
+        this.CallRing()
+        this.addMarginPrice = ''
+    })
+}
+
+//               console.log(this.addMarginPrice)
+//           let margeArray = []
+//               this.activeUserForMargin.marge.forEach(m => {
+//                   margeArray.push({...m, price: Number(m.price)})
+//           })
+//           this.activeUserForMargin.marge = margeArray
+//           let margeData = this.activeUserForMargin.marge.length !== 0 ? this.activeUserForMargin.marge : []
+//           margeData.push({actionId: new Date().getTime(), isDone:false, price:this.addMarginPrice})
+//
+// this.addMarginPriceBase({...this.activeUserForMargin, marge:margeData})
       },
 
       addMargin(user){
@@ -501,12 +533,14 @@ this.addMarginPriceBase({...this.activeUserForMargin, marge:margeData})
       handleMargeDone(actionId) {
           console.log("test1", actionId);
       },
-      getDoneTotalPrice(marge) {
+      getDoneTotalPrice(prices) {
           let s = 0
-          console.log("marge=",typeof marge)
-              marge.forEach(m => {
+          if (prices.length === 0) return 0
+          console.log("marge=",typeof prices)
+
+              prices.forEach(m => {
                   // if (m.isDone === true) {
-                      s+= Number(m.price)
+                      s+= Number(m.margin)
                   // }
               })
           return s
@@ -538,6 +572,37 @@ this.addMarginPriceBase({...this.activeUserForMargin, marge:margeData})
       selectFont(value) {
               console.log("value====", this.selectedFont)
           this.setActiveFont({name: this.selectedFont})
+      },
+      deleteUserMarginPrice(data) {
+
+                  let _this = this
+                  this.deleteUserMarginPriceCall(data).then(d => {
+                      let prices = [..._this.activeUserForMargin.prices]
+
+                      _this.activeUserForMargin.prices = prices.filter(p => p.id !== data.priceId)
+                  })
+
+
+      },
+      updatePrice(data){
+          console.log("brr",data);
+          this.updatePriceOfUser(data).then(r => {
+              let prices = [...this.activeUserForMargin.prices]
+              let newPrices = []
+         prices.forEach(p => {
+                  if ( p.id === data.id) {
+                      newPrices.push({...data})
+                  } else {
+                      newPrices.push(p)
+                  }
+              })
+
+              this.activeUserForMargin.prices = [...newPrices]
+
+          })
+      },
+      cleanMarginOfUsers(){
+              this.cleanMargin()
       }
     },
 

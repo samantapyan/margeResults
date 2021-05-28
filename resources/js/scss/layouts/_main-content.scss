@@ -6,6 +6,12 @@
   font-family: 'Monoton-Regular';
   src: url(../web-fonts/Monoton-Regular.ttf);
 }
+
+@font-face {
+  font-family: 'Pattaya-Regular';
+  src: url(../web-fonts/Pattaya-Regular.ttf);
+}
+
 .opacity-5 {
   opacity: 0.2 !important;
 }
@@ -22,12 +28,17 @@ body {
 }
 .font1 {
   font-family: 'Monoton-Regular';
-  font-size: 14px;
+  font-size: 18px;
 }
 .font2 {
-  font-size: 12px;
+  font-size: 17px;
   font-family: 'PressStart2P-Regular';
 }
+.font3 {
+  font-size: 25px;
+  font-family: 'Pattaya-Regular';
+}
+
 .time-picker {
   input  {
     width:100% !important;
@@ -354,5 +365,25 @@ input:checked + .slider:before {
   }
   input {
 
+  }
+}
+
+.delete-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.add-btn {
+  width: 32px;
+  display: inline-block;
+  height: 32px;
+  img {
+    width: 100%;
+    height: 100%;
   }
 }

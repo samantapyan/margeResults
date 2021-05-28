@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class styleProject extends Model
 {
+
+
+    protected $fillable = [
+        'image', 'isActive'
+
+    ];
     protected $guarded = [];
 }
